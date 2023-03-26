@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SimpleRangeSlider</string>
+    <string name="placeholder">0 - 100</string>
+</resources>
