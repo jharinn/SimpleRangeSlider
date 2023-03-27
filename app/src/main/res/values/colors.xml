@@ -9,5 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background">#EEEEEE</color>
     <color name="active_track">#44bd32</color>
-    <color name="inactive_track">#FFFFFFFF</color>
+    <color name="inactive_track">#FFFFFF</color>
 </resources>
