@@ -15,8 +15,6 @@ class SimpleRangeSlider @JvmOverloads constructor(
     defStyleAttr: Int = 0,
     defStyleRef: Int = 0,
 ) : View(context, attrs, defStyleAttr, defStyleRef) {
-    private val DEFAULT_MIN_VALUE = 0
-    private val DEFAULT_MAX_VALUE = 100
 
     // 기본 속성값들
     private var thumbColor = 0
@@ -27,7 +25,9 @@ class SimpleRangeSlider @JvmOverloads constructor(
     private var trackPadding = 10
     private var minValue = 0
     private var maxValue = 100
-    // 화면위치 계사에 사용하는 정규화된 값
+    private var defaultMinValue = 0
+    private var defaultMaxValue = 100
+    // 화면위치 계산에 사용하는 정규화된 값
     private var normalizedMinValue: Float = 0.0F
     private var normalizedMaxValue: Float = 1.0F
     // 현재 선택된 Thumb
@@ -52,8 +52,10 @@ class SimpleRangeSlider @JvmOverloads constructor(
     init {
         context.withStyledAttributes(attrs, R.styleable.SimpleRangeSlider) {
             thumbColor = getColor(R.styleable.SimpleRangeSlider_thumbColor, Color.BLUE)
-            minValue = getInt(R.styleable.SimpleRangeSlider_minValue, DEFAULT_MIN_VALUE)
-            maxValue = getInt(R.styleable.SimpleRangeSlider_maxValue, DEFAULT_MAX_VALUE)
+            minValue = getInt(R.styleable.SimpleRangeSlider_minValue, defaultMinValue)
+            maxValue = getInt(R.styleable.SimpleRangeSlider_maxValue, defaultMaxValue)
+            defaultMinValue = getInt(R.styleable.SimpleRangeSlider_minValue, defaultMinValue)
+            defaultMaxValue = getInt(R.styleable.SimpleRangeSlider_maxValue, defaultMaxValue)
             trackColorActive = getColor(R.styleable.SimpleRangeSlider_trackColorActive, Color.GREEN)
             trackColorInactive = getColor(R.styleable.SimpleRangeSlider_trackColorInactive, Color.WHITE)
             trackHeight = getDimensionPixelSize(R.styleable.SimpleRangeSlider_srs_trackHeight, 5)
@@ -85,7 +87,7 @@ class SimpleRangeSlider @JvmOverloads constructor(
         mRect.right = normalizedToScreen(normalizedMaxValue)
 
         // 초기값일 경우 track color 설정
-        val isDefaultValue: Boolean = (getSelectedMinValue() == DEFAULT_MIN_VALUE.toFloat() && getSelectedMaxValue() == DEFAULT_MAX_VALUE.toFloat())
+        val isDefaultValue: Boolean = (getSelectedMinValue() == defaultMinValue.toFloat() && getSelectedMaxValue() == defaultMaxValue.toFloat())
         if(isDefaultValue)
             paint.color = trackColorInactive
         else
