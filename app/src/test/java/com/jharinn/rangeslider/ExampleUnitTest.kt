@@ -1,4 +1,4 @@
-package com.example.rangeslider
+package com.jharinn.rangeslider
 
 import org.junit.Test
 

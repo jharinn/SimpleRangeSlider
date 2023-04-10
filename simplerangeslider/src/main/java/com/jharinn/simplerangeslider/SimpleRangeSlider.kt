@@ -1,15 +1,17 @@
-package com.example.rangeslider.ui.customview
+package com.jharinn.simplerangeslider
 
 import android.content.Context
 import android.graphics.*
+import android.os.Bundle
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import androidx.core.content.withStyledAttributes
-import com.example.rangeslider.R
 
-class SimpleRangeSlider @JvmOverloads constructor(
+
+public class SimpleRangeSlider @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
@@ -50,17 +52,17 @@ class SimpleRangeSlider @JvmOverloads constructor(
     }
 
     init {
-        context.withStyledAttributes(attrs, R.styleable.SimpleRangeSlider) {
-            thumbColor = getColor(R.styleable.SimpleRangeSlider_thumbColor, Color.BLUE)
-            minValue = getInt(R.styleable.SimpleRangeSlider_minValue, defaultMinValue)
-            maxValue = getInt(R.styleable.SimpleRangeSlider_maxValue, defaultMaxValue)
-            defaultMinValue = getInt(R.styleable.SimpleRangeSlider_minValue, defaultMinValue)
-            defaultMaxValue = getInt(R.styleable.SimpleRangeSlider_maxValue, defaultMaxValue)
-            trackColorActive = getColor(R.styleable.SimpleRangeSlider_trackColorActive, Color.GREEN)
-            trackColorInactive = getColor(R.styleable.SimpleRangeSlider_trackColorInactive, Color.WHITE)
-            trackHeight = getDimensionPixelSize(R.styleable.SimpleRangeSlider_srs_trackHeight, 5)
-            thumbRadius = getDimensionPixelSize(R.styleable.SimpleRangeSlider_srs_thumbRadius, 20)
-            trackPadding = getDimensionPixelSize(R.styleable.SimpleRangeSlider_trackPadding, 30) + thumbRadius
+        context.withStyledAttributes(attrs, R.styleable.SrsSimpleRangeSlider) {
+            thumbColor = getColor(R.styleable.SrsSimpleRangeSlider_srs_thumbColor, Color.BLUE)
+            minValue = getInt(R.styleable.SrsSimpleRangeSlider_srs_minValue, defaultMinValue)
+            maxValue = getInt(R.styleable.SrsSimpleRangeSlider_srs_maxValue, defaultMaxValue)
+            defaultMinValue = getInt(R.styleable.SrsSimpleRangeSlider_srs_minValue, defaultMinValue)
+            defaultMaxValue = getInt(R.styleable.SrsSimpleRangeSlider_srs_maxValue, defaultMaxValue)
+            trackColorActive = getColor(R.styleable.SrsSimpleRangeSlider_srs_trackColorActive, Color.GREEN)
+            trackColorInactive = getColor(R.styleable.SrsSimpleRangeSlider_srs_trackColorInactive, Color.WHITE)
+            trackHeight = getDimensionPixelSize(R.styleable.SrsSimpleRangeSlider_srs_trackHeight, 5)
+            thumbRadius = getDimensionPixelSize(R.styleable.SrsSimpleRangeSlider_srs_thumbRadius, 20)
+            trackPadding = getDimensionPixelSize(R.styleable.SrsSimpleRangeSlider_srs_trackPadding, 30) + thumbRadius
         }
 
         mRect = RectF(
@@ -274,19 +276,34 @@ class SimpleRangeSlider @JvmOverloads constructor(
         Math.min(1F, Math.max(0F, result))
     }
 
-    fun getSelectedMinValue(): Float {
+    public fun getSelectedMinValue(): Float {
         return normalizedToValue(normalizedMinValue)
     }
 
-    fun getSelectedMaxValue(): Float {
+    public fun getSelectedMaxValue(): Float {
         return normalizedToValue(normalizedMaxValue)
     }
 
-    fun setOnRangeSeekBarChangeListener(listener: OnValueChangeListener) {
+    public fun setOnRangeSeekBarChangeListener(listener: OnValueChangeListener) {
         this.listener = listener
     }
 
-    interface OnValueChangeListener {
-        fun onValueChanged(bar: SimpleRangeSlider, minValue: Float, maxValue: Float)
+    public interface OnValueChangeListener {
+        public fun onValueChanged(bar: SimpleRangeSlider, minValue: Float, maxValue: Float)
+    }
+    
+    override fun onSaveInstanceState(): Parcelable? {
+        val bundle = Bundle()
+        bundle.putParcelable("SUPER", super.onSaveInstanceState())
+        bundle.putDouble("MIN", normalizedMinValue.toDouble())
+        bundle.putDouble("MAX", normalizedMaxValue.toDouble())
+        return bundle
+    }
+
+    override fun onRestoreInstanceState(parcel: Parcelable) {
+        val bundle = parcel as Bundle
+        super.onRestoreInstanceState(bundle.getParcelable("SUPER"))
+        normalizedMinValue = bundle.getDouble("MIN").toFloat()
+        normalizedMaxValue = bundle.getDouble("MAX").toFloat()
     }
 }

@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ui.MainActivity">
+    tools:context="com.jharinn.rangeslider.ui.MainActivity">
 
     <TextView
         android:id="@+id/tv_value"
@@ -23,7 +23,7 @@
         style="@style/Main.HeaderText"
         />
 
-    <com.example.rangeslider.ui.customview.SimpleRangeSlider
+    <com.jharinn.simplerangeslider.SimpleRangeSlider
         android:id="@+id/range_slider"
         android:layout_width="match_parent"
         android:layout_height="350dp"

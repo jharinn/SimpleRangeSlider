@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SimpleRangeSlider">
-        <attr name="trackPadding" format="dimension" />
-        <attr name="maxValue" format="float" />
-        <attr name="minValue" format="float" />
-        <attr name="thumbColor" format="color" />
-        <attr name="trackColorActive" format="color" />
-        <attr name="trackColorInactive" format="color" />
-        <attr name="srs_thumbRadius" format="dimension" />
-        <attr name="srs_trackHeight" format="dimension" />
-    </declare-styleable>
+
 </resources>

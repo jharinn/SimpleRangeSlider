@@ -1,9 +1,9 @@
-package com.example.rangeslider.ui
+package com.jharinn.rangeslider.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rangeslider.databinding.ActivityMainBinding
-import com.example.rangeslider.ui.customview.SimpleRangeSlider
+import com.jharinn.simplerangeslider.SimpleRangeSlider
 
 class MainActivity : AppCompatActivity(), SimpleRangeSlider.OnValueChangeListener {
     private lateinit var binding: ActivityMainBinding
@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity(), SimpleRangeSlider.OnValueChangeListene
         binding.rangeSlider.setOnRangeSeekBarChangeListener(this)
     }
 
-    override fun onValueChanged(bar: SimpleRangeSlider, minValue: Float, maxValue: Float) {
+    override fun onValueChanged(bar: com.jharinn.simplerangeslider.SimpleRangeSlider, minValue: Float, maxValue: Float) {
         binding.tvValue.text = "${minValue.toInt()} - ${maxValue.toInt()}"
     }
 }
